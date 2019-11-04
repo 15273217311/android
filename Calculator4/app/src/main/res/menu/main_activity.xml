@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+    <item
+        android:id="@+id/menuConversion"
+        android:title="单位换算"
+        />
+    <item android:title="竖屏"
+        android:id="@+id/menuPor"
+        />
+    <item android:id="@+id/menuLands"
+        android:title="横屏"
+        />
+</menu>
