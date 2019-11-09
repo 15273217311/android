@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private MyDatebaseHelper dbHelp;
     private SQLiteDatabase db=null;
     private static List<Items> list=new ArrayList<Items>();
-    private Button btn_search,btn_add,btn_del,btn_renew;
+    private Button btn_search,btn_add,btn_del,btn_renew,btn_update;
     private EditText word_ed,sentence_ed;
 
     @Override
@@ -35,17 +35,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_search=(Button)findViewById(R.id.btn_search);
         btn_add=(Button)findViewById(R.id.btn_add);
         btn_del=(Button)findViewById(R.id.btn_del);
+        btn_update=(Button)findViewById(R.id.btn_update);
         btn_renew=(Button)findViewById(R.id.btn_renew);
         btn_add.setOnClickListener(this);
+        btn_update.setOnClickListener(this);
         btn_del.setOnClickListener(this);
         btn_renew.setOnClickListener(this);
         btn_search.setOnClickListener(this);
-
+        /**
         word_ed=(EditText)findViewById(R.id.word_ed);
         sentence_ed=(EditText)findViewById(R.id.sentence_ed);
         word_ed.setInputType(InputType.TYPE_NULL);
         sentence_ed.setInputType(0);
-
+        **/
         dbHelp= new MyDatebaseHelper(this,"NoteBook.db",null,1);
         db=dbHelp.getWritableDatabase();
         show();
@@ -77,6 +79,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
                 break;
+            case R.id.btn_update:
+            {
+                word_ed=(EditText)findViewById(R.id.word_ed);
+                sentence_ed=(EditText)findViewById(R.id.sentence_ed);
+                String w=word_ed.getText().toString();
+                String s=sentence_ed.getText().toString();
+                db=dbHelp.getReadableDatabase();
+                ContentValues values=new ContentValues();
+                values.put("sentence",s);
+                db.update("List",values,"word = ?",new String[]{w});
+                show();
+            }
+            break;
             case R.id.btn_renew:
             {
                 add("apple","this is a apple");
@@ -87,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_search:
             {
+                word_ed=(EditText)findViewById(R.id.word_ed);
                 String w=word_ed.getText().toString();
                 String[] columns=new String[]{"word","sentence"};
                 String[] args=new String[1];
@@ -99,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     String sentence=c.getString(c.getColumnIndex("sentence"));
                     list.add(new Items(word,sentence));
                 }
+                c.close();
                 ItemsAdapter adapter=new ItemsAdapter(this,R.layout.item,list);
                 ListView listView=(ListView) findViewById(R.id.listview);
                 listView.setAdapter(adapter);

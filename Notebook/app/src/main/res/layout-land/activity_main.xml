@@ -56,6 +56,14 @@
             android:layout_weight="1"/>
         <Button
             android:textSize="10dp"
+            android:id="@+id/btn_update"
+            android:text="update"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <Button
+            android:textSize="10dp"
             android:id="@+id/btn_renew"
             android:text="renew"
             android:layout_width="0dp"
