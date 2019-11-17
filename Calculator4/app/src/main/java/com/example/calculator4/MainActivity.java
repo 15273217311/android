@@ -71,6 +71,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.menuLands:
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
                 break;
+            case R.id.help:
+                Intent i=new Intent(this,Help.class);
+                startActivity(i);
             default:
         }
         return super.onOptionsItemSelected(item);
@@ -81,16 +84,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
         int orientation=getResources().getConfiguration().orientation;
         setContentView(R.layout.activity_main);
 
-        if(orientation== Configuration.ORIENTATION_LANDSCAPE)
-        {
-            setContentView(R.layout.activity_main);
-        }
-        else {
-            setContentView(R.layout.activity_convert);
-        }
 
         findView();
         setListener();
