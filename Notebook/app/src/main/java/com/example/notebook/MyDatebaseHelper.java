@@ -16,7 +16,7 @@ public class MyDatebaseHelper extends SQLiteOpenHelper {
     private Context mContext;
 
     public MyDatebaseHelper(Context context, String name,
-                            SQLiteDatabase.CursorFactory factory, int version)
+                            SQLiteDatabase.CursorFactory factory, int version)//（内容，数据库名，null，版本int）
     {
         super(context,name,factory,version);
         mContext=context;
@@ -24,7 +24,7 @@ public class MyDatebaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(creat_list);
+        db.execSQL(creat_list);//执行数据库语句
         //Toast.makeText(mContext,"Create succeeded",Toast.LENGTH_SHORT).show();
     }
 

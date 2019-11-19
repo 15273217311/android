@@ -1,14 +1,18 @@
 package com.example.notebook;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +29,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static List<Items> list=new ArrayList<Items>();
     private Button btn_search,btn_add,btn_del,btn_renew,btn_update;
     private EditText word_ed,sentence_ed;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.layout,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id=item.getItemId();
+        switch (id)
+        {
+            case R.id.help:
+                Intent intent=new Intent(this,Help.class);
+                startActivity(intent);
+                break;
+                default:
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         sentence_ed.setInputType(0);
         **/
         dbHelp= new MyDatebaseHelper(this,"NoteBook.db",null,1);
-        db=dbHelp.getWritableDatabase();
+        db=dbHelp.getWritableDatabase();//打开数据库
         show();
     }
 
@@ -58,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.btn_add:
+            case R.id.btn_add://增加
             {
                 word_ed=(EditText)findViewById(R.id.word_ed);
                 sentence_ed=(EditText)findViewById(R.id.sentence_ed);
@@ -68,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 show();
             }
                 break;
-            case R.id.btn_del:
+            case R.id.btn_del://删除
             {
                 word_ed=(EditText)findViewById(R.id.word_ed);
                 String w=word_ed.getText().toString();
@@ -79,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
                 break;
-            case R.id.btn_update:
+            case R.id.btn_update://更新
             {
                 word_ed=(EditText)findViewById(R.id.word_ed);
                 sentence_ed=(EditText)findViewById(R.id.sentence_ed);
@@ -100,13 +125,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 show();
             }
                 break;
-            case R.id.btn_search:
+            case R.id.btn_search://查找
             {
                 word_ed=(EditText)findViewById(R.id.word_ed);
                 String w=word_ed.getText().toString();
                 String[] columns=new String[]{"word","sentence"};
                 String[] args=new String[1];
                 args[0]=w;
+                //创建查找指针
                 Cursor c=db.query("List",columns,"word = ?",args,null,null,null);
                 list.clear();
                 while (c.moveToNext())
@@ -135,7 +161,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void add(String w,String s)
     {
-
+        //数据库插入
         ContentValues values=new ContentValues();
         values.put("word",w);
         values.put("sentence",s);
@@ -153,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void initList()
     {
         list.clear();
-        Cursor c=db.rawQuery("select * from List",null);
+        Cursor c=db.rawQuery("select * from List",null);//(litsql语句，where后的参数）
         while (c.moveToNext())
         {
             String word=c.getString(c.getColumnIndex("word"));
@@ -161,7 +187,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             list.add(new Items(word,sentence));
 
         }
-        c.close();
+        c.close();//关闭指针
     }
 
 

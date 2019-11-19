@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Uri uri=Uri.parse(content);
+                Uri uri=Uri.parse(content);//创建url
                 ContentValues values=new ContentValues();
                 values.put("word","people");
                 values.put("sentence","there are many people");

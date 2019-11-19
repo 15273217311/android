@@ -16,10 +16,10 @@ public class MyContentProvider extends ContentProvider {
     private static UriMatcher uriMatcher;
     private MyDatebaseHelper dbHelper;
 
-    static {
+    static {//静态代码块：执行一次，对类进行初始化
         uriMatcher=new UriMatcher(UriMatcher.NO_MATCH);
         uriMatcher.addURI(AUTHORITY,"List",DIR);
-        uriMatcher.addURI(AUTHORITY,"List/#", ITEM);
+        uriMatcher.addURI(AUTHORITY,"List/#", ITEM);//#任意数字
     }
 
     public MyContentProvider() {
@@ -38,7 +38,7 @@ public class MyContentProvider extends ContentProvider {
             break;
             case ITEM:
             {
-                String id=uri.getPathSegments().get(1);
+                String id=uri.getPathSegments().get(1);//获得路径部分
                 del=db.delete("List","id=?",new String[]{id});
 
             }
@@ -82,7 +82,7 @@ public class MyContentProvider extends ContentProvider {
     }
 
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection,
+    public Cursor query(Uri uri, String[] projection, String selection,//projection：选择的列
                         String[] selectionArgs, String sortOrder) {
         // TODO: Implement this to handle query requests from clients.
         SQLiteDatabase db=dbHelper.getReadableDatabase();
@@ -115,7 +115,7 @@ public class MyContentProvider extends ContentProvider {
                 break;
             case ITEM:
                 String id=uri.getPathSegments().get(1);
-                update=db.update("List",values,"id=?",new String[]{id});
+                update=db.update("List",values,"id=?",new String[]{id});//ContentValues
                 break;
                 default:
                     break;
