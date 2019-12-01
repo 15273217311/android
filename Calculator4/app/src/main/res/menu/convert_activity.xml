@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menuCalcultor"
+        android:title="计算器"
+        />
+    <item android:title="竖屏"
+        android:id="@+id/menuPor"
+        />
+    <item android:id="@+id/menuLands"
+        android:title="横屏"
+        />
+
+</menu>
